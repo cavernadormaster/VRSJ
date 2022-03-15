@@ -1,2 +1,2 @@
 # VRSJ
-jogo em vr pra faculdade São Judas
+jogo em VR Para experimento de JumpScare
