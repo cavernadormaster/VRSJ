@@ -8,7 +8,7 @@ public class ManagerJoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler,
 {
     private Image imgJoystickBg;
     private Image imgJoyStick;
-    private Vector2 posInput;
+    public static Vector2 posInput;
 
     // pega as imagens no Canvas do JoyStick
     void Start()
