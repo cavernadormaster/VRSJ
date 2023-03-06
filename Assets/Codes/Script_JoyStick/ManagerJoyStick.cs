@@ -9,6 +9,7 @@ public class ManagerJoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler,
     private Image imgJoystickBg;
     private Image imgJoyStick;
     public static Vector2 posInput;
+    public static bool JoystickOn;
 
     // pega as imagens no Canvas do JoyStick
     void Start()
@@ -42,6 +43,7 @@ public class ManagerJoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler,
     public void OnPointerDown(PointerEventData eventData)
     {
         OnDrag(eventData);
+        JoystickOn = true;
     }
 
     // detecta se o jogador tirou o dedo do joystick e para o personagem
@@ -49,6 +51,7 @@ public class ManagerJoyStick : MonoBehaviour, IDragHandler, IPointerDownHandler,
     {
         posInput = Vector2.zero;
         imgJoyStick.rectTransform.anchoredPosition = Vector2.zero;
+        JoystickOn = false;
     }
 
     // Dão valores para serem referidos no Script do personagem

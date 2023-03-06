@@ -1,11 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Walk : MonoBehaviour
 {
     [SerializeField] private CharacterController _chc;
     [SerializeField] private float speed;
+
+    public GameObject Caneca;
+    public Image Mao;
+    public GameObject buton;
+
+    public static bool safe = true;
+    public static bool isInSalt = true;
 
     private ManagerJoyStick _mngrJoystick;
 
@@ -17,15 +26,22 @@ public class Walk : MonoBehaviour
     public float rotspeed= 0.5f;
     public float dirCam = -1;
 
-
     private Transform _meshPlayer;
 
     private float inputx;
     private float inputz;
     private Vector3 v_movement;
 
+
+
     private void Start()
     {
+       
+
+        // desabilita o simbolo da mão e o botão na tela
+        Mao.enabled = false;
+        buton.SetActive(false);
+
         Cursor.visible = true;
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
         GameObject tempPlayer = GameObject.Find("FPSController");
@@ -35,7 +51,8 @@ public class Walk : MonoBehaviour
         rotX = origRot.x;
         rotY = origRot.y;
     }
-    // Update is called once per frame
+
+
     void Update()
     {
         inputx = _mngrJoystick.inputHorizontal();
@@ -53,15 +70,20 @@ public class Walk : MonoBehaviour
         //rotação da mesh
         if (inputx != 0 || inputz != 0)
         {
-            Vector3 lookdir = new Vector3(v_movement.x, 0, v_movement.y);
-            _meshPlayer.rotation = Quaternion.LookRotation(lookdir);
+            Vector3 lookdir = new Vector3(v_movement.x, 0, 0);
+            //_meshPlayer.rotation = Quaternion.LookRotation(lookdir);
+        }
+
+        if(ManagerJoyStick.JoystickOn == true)
+        {
+            Debug.Log("funfou");
         }
 
         //movimentação de camera por touch na tela
         //verifica cada toque na tela
         foreach(Touch touch in Input.touches)
         {
-            if(touch.phase == TouchPhase.Began)
+            if(touch.phase == TouchPhase.Began && ManagerJoyStick.JoystickOn == false)
             {
                 initTouch = touch;
             }else if (touch.phase == TouchPhase.Moved)
@@ -79,4 +101,36 @@ public class Walk : MonoBehaviour
         }
 
     }
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Jogador"))
+        {
+            Mao.enabled = true;
+            buton.SetActive(true);
+        }
+        if (other.CompareTag("Walkable")) 
+        {
+            safe = true;
+           
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Jogador"))
+        {
+            Mao.enabled = false;
+            buton.SetActive(false);
+        }else if (other.CompareTag("Walkable"))
+        { 
+            safe = false;
+            isInSalt = false;
+        }
+    }
+    public void DestroyCup()
+    {
+        Destroy(Caneca);
+    }
+
+    
 }
