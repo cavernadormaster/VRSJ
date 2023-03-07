@@ -17,6 +17,7 @@ public class Walk : MonoBehaviour
     public static bool isInSalt = true;
 
     private ManagerJoyStick _mngrJoystick;
+    private JoyStickCam _mnJoyCam;
 
     private Touch initTouch = new Touch();
     public Camera cam;
@@ -38,11 +39,12 @@ public class Walk : MonoBehaviour
     {
        
 
-        // desabilita o simbolo da mão e o botão na tela
+        // desabilita o simbolo da mao e o botao na tela
         Mao.enabled = false;
         buton.SetActive(false);
 
         Cursor.visible = true;
+        _mnJoyCam = GameObject.Find("ImageJoyStickBgCam").GetComponent<JoyStickCam>();
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
         GameObject tempPlayer = GameObject.Find("FPSController");
         _chc = tempPlayer.GetComponent<CharacterController>();
@@ -62,43 +64,41 @@ public class Walk : MonoBehaviour
     private void FixedUpdate()
     {
 
-        //movimentação
+        //movimentaï¿½ï¿½o
             v_movement = new Vector3(-inputz * speed, 0, inputx * speed);
-       
+          
+
         _chc.Move(v_movement);
 
-        //rotação da mesh
+        //rotaï¿½ï¿½o da mesh
         if (inputx != 0 || inputz != 0)
         {
             Vector3 lookdir = new Vector3(v_movement.x, 0, 0);
             //_meshPlayer.rotation = Quaternion.LookRotation(lookdir);
         }
 
-        if(ManagerJoyStick.JoystickOn == true)
-        {
-            Debug.Log("funfou");
-        }
+        cam.transform.eulerAngles = new Vector3(inputz, inputx, 0f);
 
-        //movimentação de camera por touch na tela
-        //verifica cada toque na tela
-        foreach(Touch touch in Input.touches)
-        {
-            if(touch.phase == TouchPhase.Began && ManagerJoyStick.JoystickOn == false)
-            {
-                initTouch = touch;
-            }else if (touch.phase == TouchPhase.Moved)
-            {
-                float deltaX = initTouch.position.x - touch.position.x;
-                float deltaY = initTouch.position.y - touch.position.y;
-                rotX -= deltaY * Time.deltaTime * rotspeed * dirCam;
-                rotY += deltaX * Time.deltaTime * rotspeed * dirCam;
-                rotX = Mathf.Clamp(rotX, -45f, 45f);
-                cam.transform.eulerAngles = new Vector3(rotX, rotY, 0f); 
-            }else if (touch.phase == TouchPhase.Ended)
-            {
-                initTouch = new Touch();
-            }
-        }
+        //   //movimentaï¿½ï¿½o de camera por touch na tela
+        //   //verifica cada toque na tela
+        //   foreach(Touch touch in Input.touches)
+        //   {
+        //       if(touch.phase == TouchPhase.Began   && ManagerJoyStick.JoystickOn == false)
+        //       {
+        //           initTouch = touch;
+        //       }else if (touch.phase == TouchPhase.Moved)
+        //       {
+        //           float deltaX = initTouch.position.x - touch.position.x;
+        //           float deltaY = initTouch.position.y - touch.position.y;
+        //           rotX -= deltaY * Time.deltaTime * rotspeed * dirCam;
+        //           rotY += deltaX * Time.deltaTime * rotspeed * dirCam;
+        //           rotX = Mathf.Clamp(rotX, -45f, 45f);
+        //           cam.transform.eulerAngles = new Vector3(rotX, rotY, 0f); 
+        //       }else if (touch.phase == TouchPhase.Ended)
+        //       {
+        //           initTouch = new Touch();
+        //       }
+        //   }
 
     }
     private void OnTriggerEnter(Collider other)
@@ -130,6 +130,8 @@ public class Walk : MonoBehaviour
     public void DestroyCup()
     {
         Destroy(Caneca);
+        Mao.enabled = false;
+        buton.SetActive(false);
     }
 
     
