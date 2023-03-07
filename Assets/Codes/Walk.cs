@@ -44,7 +44,7 @@ public class Walk : MonoBehaviour
         buton.SetActive(false);
 
         Cursor.visible = true;
-        _mnJoyCam = GameObject.Find("ImageJoyStickBgCam").GetComponent<JoyStickCam>();
+        //_mnJoyCam = GameObject.Find("ImageJoyStickBgCam").GetComponent<JoyStickCam>();
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
         GameObject tempPlayer = GameObject.Find("FPSController");
         _chc = tempPlayer.GetComponent<CharacterController>();
@@ -77,28 +77,28 @@ public class Walk : MonoBehaviour
             //_meshPlayer.rotation = Quaternion.LookRotation(lookdir);
         }
 
-        cam.transform.eulerAngles = new Vector3(inputz, inputx, 0f);
+        //cam.transform.eulerAngles = new Vector3(inputz, inputx, 0f);
 
-        //   //movimenta��o de camera por touch na tela
-        //   //verifica cada toque na tela
-        //   foreach(Touch touch in Input.touches)
-        //   {
-        //       if(touch.phase == TouchPhase.Began   && ManagerJoyStick.JoystickOn == false)
-        //       {
-        //           initTouch = touch;
-        //       }else if (touch.phase == TouchPhase.Moved)
-        //       {
-        //           float deltaX = initTouch.position.x - touch.position.x;
-        //           float deltaY = initTouch.position.y - touch.position.y;
-        //           rotX -= deltaY * Time.deltaTime * rotspeed * dirCam;
-        //           rotY += deltaX * Time.deltaTime * rotspeed * dirCam;
-        //           rotX = Mathf.Clamp(rotX, -45f, 45f);
-        //           cam.transform.eulerAngles = new Vector3(rotX, rotY, 0f); 
-        //       }else if (touch.phase == TouchPhase.Ended)
-        //       {
-        //           initTouch = new Touch();
-        //       }
-        //   }
+         //movimenta��o de camera por touch na tela
+         //verifica cada toque na tela
+         foreach(Touch touch in Input.touches)
+         {
+             if(touch.phase == TouchPhase.Began   && ManagerJoyStick.JoystickOn == false)
+             {
+                 initTouch = touch;
+             }else if (touch.phase == TouchPhase.Moved)
+             {
+                 float deltaX = initTouch.position.x - touch.position.x;
+                 float deltaY = initTouch.position.y - touch.position.y;
+                 rotX -= deltaY * Time.deltaTime * rotspeed * dirCam;
+                 rotY += deltaX * Time.deltaTime * rotspeed * dirCam;
+                 rotX = Mathf.Clamp(rotX, -45f, 45f);
+                 cam.transform.eulerAngles = new Vector3(rotX, rotY, 0f); 
+             }else if (touch.phase == TouchPhase.Ended)
+             {
+                 initTouch = new Touch();
+             }
+         }
 
     }
     private void OnTriggerEnter(Collider other)
