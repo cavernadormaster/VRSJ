@@ -34,6 +34,11 @@ public class Walk : MonoBehaviour
     private Vector3 v_movement;
 
 
+    // identifica o tamanho da tela
+    public float screenWidth;
+
+
+
 
     private void Start()
     {
@@ -44,7 +49,6 @@ public class Walk : MonoBehaviour
         buton.SetActive(false);
 
         Cursor.visible = true;
-        //_mnJoyCam = GameObject.Find("ImageJoyStickBgCam").GetComponent<JoyStickCam>();
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
         GameObject tempPlayer = GameObject.Find("FPSController");
         _chc = tempPlayer.GetComponent<CharacterController>();
@@ -52,6 +56,9 @@ public class Walk : MonoBehaviour
         origRot = cam.transform.eulerAngles;
         rotX = origRot.x;
         rotY = origRot.y;
+
+       
+        screenWidth = Screen.width;
     }
 
 
@@ -74,19 +81,18 @@ public class Walk : MonoBehaviour
         if (inputx != 0 || inputz != 0)
         {
             Vector3 lookdir = new Vector3(v_movement.x, 0, 0);
-            //_meshPlayer.rotation = Quaternion.LookRotation(lookdir);
         }
 
-        //cam.transform.eulerAngles = new Vector3(inputz, inputx, 0f);
+        
 
          //movimenta��o de camera por touch na tela
          //verifica cada toque na tela
          foreach(Touch touch in Input.touches)
          {
-             if(touch.phase == TouchPhase.Began   && ManagerJoyStick.JoystickOn == false)
+             if(touch.phase == TouchPhase.Began && touch.position.x > (screenWidth/2))
              {
                  initTouch = touch;
-             }else if (touch.phase == TouchPhase.Moved)
+             }else if (touch.phase == TouchPhase.Moved && touch.position.x > (screenWidth / 2))
              {
                  float deltaX = initTouch.position.x - touch.position.x;
                  float deltaY = initTouch.position.y - touch.position.y;
