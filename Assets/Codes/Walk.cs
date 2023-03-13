@@ -37,8 +37,13 @@ public class Walk : MonoBehaviour
     // identifica o tamanho da tela
     public float screenWidth;
 
-
-
+    private GameObject inspectObj;
+    private GameObject inspectPoint;
+    public bool Item = false;
+    public bool IsInspect = false;
+    public Image Mao2;
+    public GameObject buton2;
+    private Vector3 initialItemPosition;
 
     private void Start()
     {
@@ -47,6 +52,8 @@ public class Walk : MonoBehaviour
         // desabilita o simbolo da mao e o botao na tela
         Mao.enabled = false;
         buton.SetActive(false);
+        Mao2.enabled = false;
+        buton2.SetActive(false);
 
         Cursor.visible = true;
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
@@ -57,7 +64,9 @@ public class Walk : MonoBehaviour
         rotX = origRot.x;
         rotY = origRot.y;
 
-       
+        inspectObj = GameObject.Find("Cartao");
+        inspectPoint = GameObject.Find("PointInspect");
+
         screenWidth = Screen.width;
     }
 
@@ -72,6 +81,7 @@ public class Walk : MonoBehaviour
     {
 
         //movimenta��o
+        if(!IsInspect)
             v_movement = new Vector3(-inputz * speed, 0, inputx * speed);
           
 
@@ -118,6 +128,11 @@ public class Walk : MonoBehaviour
         {
             safe = true;
            
+        }else if(other.CompareTag("Cartao") && !IsInspect)
+        {
+            Item = true;
+            Mao.enabled = true;
+            buton.SetActive(true);
         }
     }
 
@@ -127,18 +142,58 @@ public class Walk : MonoBehaviour
         {
             Mao.enabled = false;
             buton.SetActive(false);
-        }else if (other.CompareTag("Walkable"))
+
+        }else if (other.CompareTag("Walkable") && !Item)
         { 
             safe = false;
             isInSalt = false;
+        }else if(other.CompareTag("Cartao"))
+        {
+            Item = false;
+            Mao.enabled = false;
+            buton.SetActive(false);
         }
     }
     public void DestroyCup()
     {
-        Destroy(Caneca);
-        Mao.enabled = false;
-        buton.SetActive(false);
+        if (!Item)
+        {
+            Destroy(Caneca);
+            Mao.enabled = false;
+            buton.SetActive(false);
+            Debug.Log("GET");
+        }
+
     }
 
+    public void Inspect()
+    {
+        if(Item)
+        {
+            initialItemPosition = inspectObj.transform.position;
+            inspectObj.transform.position = inspectPoint.transform.position;
+            IsInspect = true;
+            v_movement = new Vector3(0, 0, 0);
+            Mao2.enabled = true;
+            buton2.SetActive(true);
+
+            Mao.enabled = false;
+            buton.SetActive(false);
+        }
+        
+    }
+    public void DesInspect()
+    {
+        if (IsInspect)
+        {
+            Debug.Log("GET");
+            Item = false;
+            IsInspect = false;
+            Mao2.enabled = false;
+            buton2.SetActive(false);
+            v_movement = new Vector3(-inputz * speed, 0, inputx * speed);
+            inspectObj.transform.position = initialItemPosition;
+        }
+    }
     
 }
