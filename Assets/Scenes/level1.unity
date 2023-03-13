@@ -5100,6 +5100,7 @@ MonoBehaviour:
   cam: {fileID: 39481005}
   rotspeed: 0.5
   dirCam: -1
+  screenWidth: 0
 --- !u!1 &1155236579
 GameObject:
   m_ObjectHideFlags: 0
