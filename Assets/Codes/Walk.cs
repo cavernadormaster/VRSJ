@@ -9,6 +9,11 @@ public class Walk : MonoBehaviour
     [SerializeField] private CharacterController _chc;
     [SerializeField] private float speed;
 
+    private Vector2 initialTouch1Pos, initialTouch2Pos; 
+    private float initialDistance;
+
+    private float distanceChange;
+
     public GameObject Caneca;
     public Image Mao;
     public GameObject buton;
@@ -59,7 +64,6 @@ public class Walk : MonoBehaviour
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
         GameObject tempPlayer = GameObject.Find("FPSController");
         _chc = tempPlayer.GetComponent<CharacterController>();
-        _meshPlayer = tempPlayer.transform.GetChild(0);
         origRot = cam.transform.eulerAngles;
         rotX = origRot.x;
         rotY = origRot.y;
@@ -75,8 +79,37 @@ public class Walk : MonoBehaviour
     {
         inputx = _mngrJoystick.inputHorizontal();
         inputz = _mngrJoystick.inputVertical();
-       
+
+        if (Input.touchCount >= 2)
+        {
+            Touch touch1 = Input.GetTouch(0);
+            Touch touch2 = Input.GetTouch(1);
+
+            if (touch1.phase == TouchPhase.Began || touch2.phase == TouchPhase.Began)
+            {
+                initialTouch1Pos = touch1.position;
+                initialTouch2Pos = touch2.position;
+                initialDistance = Vector2.Distance(initialTouch1Pos, initialTouch2Pos);
+            }
+            else if (touch1.phase == TouchPhase.Moved || touch2.phase == TouchPhase.Moved)
+            {
+
+                float newDistance = Vector2.Distance(touch1.position, touch2.position);
+                distanceChange = newDistance - initialDistance;
+                Debug.Log("Distance between touches changed by: " + distanceChange);
+            }
+        }
+
+        if (IsInspect)
+        {
+            if (distanceChange >= 100)
+            {
+                inspectObj.transform.position -= _chc.transform.position;
+            }
+        }
     }
+
+
     private void FixedUpdate()
     {
 
@@ -99,10 +132,11 @@ public class Walk : MonoBehaviour
          //verifica cada toque na tela
          foreach(Touch touch in Input.touches)
          {
-             if(touch.phase == TouchPhase.Began && touch.position.x > (screenWidth/2))
+             
+             if(touch.phase == TouchPhase.Began && touch.position.x > (screenWidth/2) && !IsInspect)
              {
                  initTouch = touch;
-             }else if (touch.phase == TouchPhase.Moved && touch.position.x > (screenWidth / 2))
+             }else if (touch.phase == TouchPhase.Moved && touch.position.x > (screenWidth / 2) && !IsInspect)
              {
                  float deltaX = initTouch.position.x - touch.position.x;
                  float deltaY = initTouch.position.y - touch.position.y;
@@ -115,6 +149,8 @@ public class Walk : MonoBehaviour
                  initTouch = new Touch();
              }
          }
+
+        
 
     }
     private void OnTriggerEnter(Collider other)
