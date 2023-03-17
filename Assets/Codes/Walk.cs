@@ -9,6 +9,11 @@ public class Walk : MonoBehaviour
     [SerializeField] private CharacterController _chc;
     [SerializeField] private float speed;
 
+    public float zoomSpeed = 10f;
+    public float minZoom = -5f;
+    public float maxZoom = 20f;
+    private float targetZoom;
+
     private Vector2 initialTouch1Pos, initialTouch2Pos; 
     private float initialDistance;
 
@@ -72,6 +77,8 @@ public class Walk : MonoBehaviour
         inspectPoint = GameObject.Find("PointInspect");
 
         screenWidth = Screen.width;
+
+        targetZoom = cam.fieldOfView;
     }
 
 
@@ -100,12 +107,14 @@ public class Walk : MonoBehaviour
             }
         }
 
-        if (IsInspect)
+        
+
+        if (IsInspect && distanceChange >= 100 || IsInspect && distanceChange < -100)
         {
-            if (distanceChange >= 100)
-            {
-                inspectObj.transform.position -= _chc.transform.position;
-            }
+            Debug.Log("Distance between touches changed by: " + distanceChange);
+            targetZoom -= distanceChange * zoomSpeed;
+            targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetZoom, Time.deltaTime * zoomSpeed);
         }
     }
 
