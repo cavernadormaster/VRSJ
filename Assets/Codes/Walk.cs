@@ -19,7 +19,9 @@ public class Walk : MonoBehaviour
 
     private float distanceChange;
 
-    public GameObject Caneca;
+    private GameObject cama; 
+    private GameObject cartao;
+    private GameObject controle;
     public Image Mao;
     public GameObject buton;
 
@@ -49,10 +51,9 @@ public class Walk : MonoBehaviour
 
     private GameObject inspectObj;
     private GameObject inspectPoint;
-    public bool Item = false;
+    public static bool Item_Cartao = false;
+    public static bool Item_Controle = false;
     public bool IsInspect = false;
-    public Image Mao2;
-    public GameObject buton2;
     private Vector3 initialItemPosition;
 
     private void Start()
@@ -62,8 +63,6 @@ public class Walk : MonoBehaviour
         // desabilita o simbolo da mao e o botao na tela
         Mao.enabled = false;
         buton.SetActive(false);
-        Mao2.enabled = false;
-        buton2.SetActive(false);
 
         Cursor.visible = true;
         _mngrJoystick = GameObject.Find("ImageJoyStickBg").GetComponent<ManagerJoyStick>();
@@ -79,6 +78,10 @@ public class Walk : MonoBehaviour
         screenWidth = Screen.width;
 
         targetZoom = cam.fieldOfView;
+
+        cama = GameObject.Find("Cama");
+        cartao = GameObject.Find("Cartao");
+        controle = GameObject.Find("Controle de Acesso");
     }
 
 
@@ -175,7 +178,12 @@ public class Walk : MonoBehaviour
            
         }else if(other.CompareTag("Cartao") && !IsInspect)
         {
-            Item = true;
+            Item_Cartao = true;
+            Mao.enabled = true;
+            buton.SetActive(true);
+        }else if(other.CompareTag("Controle") && !IsInspect)
+        {
+            Item_Controle = true;
             Mao.enabled = true;
             buton.SetActive(true);
         }
@@ -188,39 +196,57 @@ public class Walk : MonoBehaviour
             Mao.enabled = false;
             buton.SetActive(false);
 
-        }else if (other.CompareTag("Walkable") && !Item)
+        }else if (other.CompareTag("Walkable") && !Item_Cartao)
         { 
             safe = false;
             isInSalt = false;
         }else if(other.CompareTag("Cartao"))
         {
-            Item = false;
+            Item_Cartao = false;
+            Mao.enabled = false;
+            buton.SetActive(false);
+
+        }else if (other.CompareTag("Controle") && !IsInspect)
+        {
+            Item_Controle = false;
             Mao.enabled = false;
             buton.SetActive(false);
         }
     }
     public void DestroyCup()
     {
-        if (!Item)
+        if(Item_Cartao)
         {
-            Destroy(Caneca);
+            Destroy(cartao);
             Mao.enabled = false;
             buton.SetActive(false);
-            Debug.Log("GET");
+            Item_Cartao = false;
+
+        }
+        else if (!Item_Cartao)
+         {
+             Destroy(cama);
+             Mao.enabled = false;
+             buton.SetActive(false);
+             Debug.Log("GET");
+         }else if(Item_Controle)
+        {
+            Destroy(controle);
+            Mao.enabled = false;
+            buton.SetActive(false);
+            Item_Controle = false;
         }
 
     }
 
     public void Inspect()
     {
-        if(Item)
+        if(Item_Cartao)
         {
             initialItemPosition = inspectObj.transform.position;
             inspectObj.transform.position = inspectPoint.transform.position;
             IsInspect = true;
             v_movement = new Vector3(0, 0, 0);
-            Mao2.enabled = true;
-            buton2.SetActive(true);
 
             Mao.enabled = false;
             buton.SetActive(false);
@@ -232,10 +258,8 @@ public class Walk : MonoBehaviour
         if (IsInspect)
         {
             Debug.Log("GET");
-            Item = false;
+            Item_Cartao = false;
             IsInspect = false;
-            Mao2.enabled = false;
-            buton2.SetActive(false);
             v_movement = new Vector3(-inputz * speed, 0, inputx * speed);
             inspectObj.transform.position = initialItemPosition;
         }

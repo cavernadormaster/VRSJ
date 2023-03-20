@@ -2,48 +2,27 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour, IDropHandler
+public class Slot : MonoBehaviour
 {
-    public Image background;
-    public Item item;
-    public bool isOccupied = false;
+    public Image _cartao;
+    public Image _controleAcesso;
 
-    private Inventory inventory;
-    private ItemPanel itemPanel;
 
-    private void Awake()
+    
+
+    public void RightObject()
     {
-        inventory = FindObjectOfType<Inventory>();
-        itemPanel = FindObjectOfType<ItemPanel>();
+        
     }
-
-    public void OnDrop(PointerEventData eventData)
+    public void ADDToInventory()
     {
-        if (eventData.pointerDrag != null)
+        if (!Walk.Item_Cartao)
         {
-            ItemDragHandler itemDragHandler = eventData.pointerDrag.GetComponent<ItemDragHandler>();
-
-            if (itemDragHandler != null)
-            {
-                if (!isOccupied)
-                {
-                    item = itemDragHandler.item;
-                    itemDragHandler.slot.item = null;
-                    itemDragHandler.slot.isOccupied = false;
-                    itemDragHandler.slot.background.color = Color.white;
-                    inventory.UpdateInventory();
-                    isOccupied = true;
-                    background.color = Color.gray;
-                }
-            }
+            Debug.Log("cart");
+            _cartao.enabled = true;
+        }else if(!Walk.Item_Controle)
+        {
+            _cartao.enabled = true;
         }
     }
-
-    public void OnClick()
-    {
-        if (isOccupied)
-        {
-            itemPanel.ShowPanel(item);
-        }
-    }
-}
+} 
