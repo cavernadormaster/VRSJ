@@ -7,17 +7,30 @@ public class Slot : MonoBehaviour
     public Image cartao;
     private bool cathcCartão;
     public Image controleAcesso;
+    private bool cathControle;
     private int _countTouch;
     public GameObject Gamecartao;
+    public GameObject GameControle;
     
 
-    public void InspectButton()
+    public void InspectButtonCartao()
     {
         _countTouch++;
-        if(_countTouch == 2 )//&& cathcCartão)
+        if(cathcCartão && _countTouch >= 2)
         {
             _countTouch = 0;
             Instantiate(Gamecartao, Walk.inspectPoint.transform.position, Quaternion.identity);
+            Walk.IsInspect = true;
+        }
+    }
+    public void InspectControle()
+    {
+        _countTouch++;
+        if (_countTouch >=2 && cathControle)
+        {
+            
+            _countTouch = 0;
+            Instantiate(GameControle, Walk.inspectPoint.transform.position, Quaternion.identity);
         }
     }
     public void ADDToInventory()
@@ -31,6 +44,7 @@ public class Slot : MonoBehaviour
         {
             controleAcesso.enabled = true;
             Walk.Item_Controle_pego = false;
+            cathControle = true;
         }
     }
 } 

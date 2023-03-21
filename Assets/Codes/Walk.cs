@@ -55,7 +55,7 @@ public class Walk : MonoBehaviour
     public static bool Item_Cartao_pego = false;
     public static bool Item_Controle = false;
     public static bool Item_Controle_pego = false;
-    public bool IsInspect = false;
+    public static bool IsInspect = false;
     private Vector3 initialItemPosition;
 
     private void Start()
@@ -234,7 +234,6 @@ public class Walk : MonoBehaviour
              Debug.Log("GET");
          }else if(Item_Controle)
         {
-            Debug.Log("controle");
             Destroy(controle);
             Mao.enabled = false;
             buton.SetActive(false);
@@ -246,16 +245,6 @@ public class Walk : MonoBehaviour
 
     public void Inspect()
     {
-        if(Item_Cartao)
-        {
-            initialItemPosition = inspectObj.transform.position;
-            inspectObj.transform.position = inspectPoint.transform.position;
-            IsInspect = true;
-            v_movement = new Vector3(0, 0, 0);
-
-            Mao.enabled = false;
-            buton.SetActive(false);
-        }
         
     }
     public void DesInspect()
