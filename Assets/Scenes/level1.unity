@@ -3269,6 +3269,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slot3
       objectReference: {fileID: 0}
+    - target: {fileID: 3519326093246883994, guid: 9cc595b5e2b38ef438b31bd1f57041e4,
+        type: 3}
+      propertyPath: cartao
+      value: 
+      objectReference: {fileID: 113820192}
+    - target: {fileID: 3519326093246883994, guid: 9cc595b5e2b38ef438b31bd1f57041e4,
+        type: 3}
+      propertyPath: controleAcesso
+      value: 
+      objectReference: {fileID: 520676058}
     - target: {fileID: 3969175544247538239, guid: 9cc595b5e2b38ef438b31bd1f57041e4,
         type: 3}
       propertyPath: m_TargetGraphic
@@ -4416,9 +4426,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7608134599038065417, guid: e0331f8eea3c72d4d8f4e9f28cdac0f8,
         type: 3}
+      propertyPath: cartao
+      value: 
+      objectReference: {fileID: 113820192}
+    - target: {fileID: 7608134599038065417, guid: e0331f8eea3c72d4d8f4e9f28cdac0f8,
+        type: 3}
       propertyPath: _cartao
       value: 
       objectReference: {fileID: 113820192}
+    - target: {fileID: 7608134599038065417, guid: e0331f8eea3c72d4d8f4e9f28cdac0f8,
+        type: 3}
+      propertyPath: controleAcesso
+      value: 
+      objectReference: {fileID: 520676058}
     - target: {fileID: 7608134599038065417, guid: e0331f8eea3c72d4d8f4e9f28cdac0f8,
         type: 3}
       propertyPath: _controleAcesso
@@ -7559,9 +7579,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1022341333343293590, guid: a77bbce90ccccff439671388c0cbbdde,
         type: 3}
+      propertyPath: cartao
+      value: 
+      objectReference: {fileID: 113820192}
+    - target: {fileID: 1022341333343293590, guid: a77bbce90ccccff439671388c0cbbdde,
+        type: 3}
       propertyPath: _cartao
       value: 
       objectReference: {fileID: 113820192}
+    - target: {fileID: 1022341333343293590, guid: a77bbce90ccccff439671388c0cbbdde,
+        type: 3}
+      propertyPath: controleAcesso
+      value: 
+      objectReference: {fileID: 520676058}
     - target: {fileID: 1022341333343293590, guid: a77bbce90ccccff439671388c0cbbdde,
         type: 3}
       propertyPath: _controleAcesso

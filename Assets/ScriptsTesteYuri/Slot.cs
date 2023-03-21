@@ -4,25 +4,30 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour
 {
-    public Image _cartao;
-    public Image _controleAcesso;
-
+    public Image cartao;
+    public Image controleAcesso;
+    private int _countTouch;
 
     
 
-    public void RightObject()
+    public void InspectButton()
     {
-        
+        _countTouch++;
+        if(_countTouch == 2)
+        {
+            Debug.Log("Inst");
+        }
     }
     public void ADDToInventory()
     {
-        if (!Walk.Item_Cartao)
+        if(!Walk.Item_Cartao && Walk.Item_Cartao_pego)
         {
-            Debug.Log("cart");
-            _cartao.enabled = true;
-        }else if(!Walk.Item_Controle)
+            cartao.enabled = true;
+            Walk.Item_Cartao_pego = false;
+        }else if(!Walk.Item_Controle && Walk.Item_Controle_pego)
         {
-            _cartao.enabled = true;
+            controleAcesso.enabled = true;
+            Walk.Item_Controle_pego = false;
         }
     }
 } 

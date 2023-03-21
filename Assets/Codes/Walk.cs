@@ -51,8 +51,10 @@ public class Walk : MonoBehaviour
 
     private GameObject inspectObj;
     private GameObject inspectPoint;
-    public static bool Item_Cartao = false;
+    public static bool Item_Cartao = false; 
+    public static bool Item_Cartao_pego = false;
     public static bool Item_Controle = false;
+    public static bool Item_Controle_pego = false;
     public bool IsInspect = false;
     private Vector3 initialItemPosition;
 
@@ -81,7 +83,7 @@ public class Walk : MonoBehaviour
 
         cama = GameObject.Find("Cama");
         cartao = GameObject.Find("Cartao");
-        controle = GameObject.Find("Controle de Acesso");
+        controle = GameObject.Find("ControledeAcesso");
     }
 
 
@@ -176,12 +178,12 @@ public class Walk : MonoBehaviour
         {
             safe = true;
            
-        }else if(other.CompareTag("Cartao") && !IsInspect)
+        }else if(other.CompareTag("Cartao"))
         {
             Item_Cartao = true;
             Mao.enabled = true;
             buton.SetActive(true);
-        }else if(other.CompareTag("Controle") && !IsInspect)
+        }else if(other.CompareTag("Controle"))
         {
             Item_Controle = true;
             Mao.enabled = true;
@@ -206,8 +208,9 @@ public class Walk : MonoBehaviour
             Mao.enabled = false;
             buton.SetActive(false);
 
-        }else if (other.CompareTag("Controle") && !IsInspect)
+        }else if (other.CompareTag("Controle"))
         {
+            
             Item_Controle = false;
             Mao.enabled = false;
             buton.SetActive(false);
@@ -221,9 +224,9 @@ public class Walk : MonoBehaviour
             Mao.enabled = false;
             buton.SetActive(false);
             Item_Cartao = false;
-
+            Item_Cartao_pego = true;
         }
-        else if (!Item_Cartao)
+        else if (!Item_Cartao && !Item_Controle)
          {
              Destroy(cama);
              Mao.enabled = false;
@@ -231,10 +234,12 @@ public class Walk : MonoBehaviour
              Debug.Log("GET");
          }else if(Item_Controle)
         {
+            Debug.Log("controle");
             Destroy(controle);
             Mao.enabled = false;
             buton.SetActive(false);
             Item_Controle = false;
+            Item_Controle_pego = true;
         }
 
     }
