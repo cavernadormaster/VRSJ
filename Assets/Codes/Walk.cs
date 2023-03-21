@@ -109,6 +109,7 @@ public class Walk : MonoBehaviour
                 float newDistance = Vector2.Distance(touch1.position, touch2.position);
                 distanceChange = newDistance - initialDistance;
                 Debug.Log("Distance between touches changed by: " + distanceChange);
+                Slot.objectToInspect.transform.localScale = Vector2.one * (distanceChange/10);
             }
         }
 
@@ -120,6 +121,31 @@ public class Walk : MonoBehaviour
             targetZoom -= distanceChange * zoomSpeed;
             targetZoom = Mathf.Clamp(targetZoom, minZoom, maxZoom);
             cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetZoom, Time.deltaTime * zoomSpeed);
+        }else if(IsInspect)
+        {
+            Mao.enabled = true;
+            buton.SetActive(true);
+
+            float rotationSpeed = 10f;
+
+            if (Input.touchCount > 0 && Input.touchCount < 2)
+            {
+                Touch touch = Input.GetTouch(0);
+
+                if (touch.phase == TouchPhase.Moved)
+                {
+                    Vector2 touchDeltaPosition = touch.deltaPosition;
+
+                   Slot.objectToInspect.transform.Rotate(new Vector3(-touchDeltaPosition.y, touchDeltaPosition.x, 0) * rotationSpeed);
+                }
+            }
+
+        }
+
+        if(Slot.cathcCartão && Slot.cathControle)
+        {
+            GameObject porta = GameObject.Find("vertice");
+            porta.transform.rotation = Quaternion.Euler(0, 94, 0);
         }
     }
 
@@ -226,7 +252,7 @@ public class Walk : MonoBehaviour
             Item_Cartao = false;
             Item_Cartao_pego = true;
         }
-        else if (!Item_Cartao && !Item_Controle)
+        else if (!Item_Cartao && !Item_Controle && !IsInspect)
          {
              Destroy(cama);
              Mao.enabled = false;
@@ -243,20 +269,5 @@ public class Walk : MonoBehaviour
 
     }
 
-    public void Inspect()
-    {
-        
-    }
-    public void DesInspect()
-    {
-        if (IsInspect)
-        {
-            Debug.Log("GET");
-            Item_Cartao = false;
-            IsInspect = false;
-            v_movement = new Vector3(-inputz * speed, 0, inputx * speed);
-            inspectObj.transform.position = initialItemPosition;
-        }
-    }
     
 }
