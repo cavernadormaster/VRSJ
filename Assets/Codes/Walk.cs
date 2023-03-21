@@ -20,8 +20,8 @@ public class Walk : MonoBehaviour
     private float distanceChange;
 
     private GameObject cama; 
-    private GameObject cartao;
-    private GameObject controle;
+    public static GameObject cartao;
+    public static GameObject controle;
     public Image Mao;
     public GameObject buton;
 
@@ -50,7 +50,7 @@ public class Walk : MonoBehaviour
     public float screenWidth;
 
     private GameObject inspectObj;
-    private GameObject inspectPoint;
+    public static GameObject inspectPoint;
     public static bool Item_Cartao = false; 
     public static bool Item_Cartao_pego = false;
     public static bool Item_Controle = false;
