@@ -2040,7 +2040,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AD WATCH
+  m_Text: 'BUY  NOW
+
+'
 --- !u!222 &333752936
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4026,7 +4028,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 331.47034, y: 189.59589}
+  m_AnchoredPosition: {x: 328, y: 234}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &760073701
@@ -4038,11 +4040,48 @@ MonoBehaviour:
   m_GameObject: {fileID: 760073699}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6133c106479cad246aca05c1b20d76b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 36a5f511b0d8142cba0aeb92d0b264c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _androidAdUnitId: Rewarded_Android
-  _iOSAdUnitId: Rewarded_iOS
+  productId: com.osRenegados.VRTest.FlashLight
+  buttonType: 0
+  consumePurchase: 1
+  onTransactionsRestored:
+    m_PersistentCalls:
+      m_Calls: []
+  onPurchaseComplete:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1898323666}
+        m_TargetAssemblyTypeName: IAPMANAGER, Assembly-CSharp
+        m_MethodName: OnPurchaseComplete
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPurchaseFailed:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1898323666}
+        m_TargetAssemblyTypeName: IAPMANAGER, Assembly-CSharp
+        m_MethodName: OnPurchaseFailure
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  titleText: {fileID: 0}
+  descriptionText: {fileID: 0}
+  priceText: {fileID: 333752935}
 --- !u!114 &760073702
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4086,19 +4125,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 760073703}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 760073701}
-        m_TargetAssemblyTypeName: RewardsAds, Assembly-CSharp
-        m_MethodName: ShowAd
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &760073703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5854,7 +5881,7 @@ MonoBehaviour:
   _androidGAmeId: 5216560
   _IOSGameId: 5216561
   _testMode: 1
-  rewardsAdsButton: {fileID: 760073701}
+  rewardsAdsButton: {fileID: 0}
 --- !u!1 &1155236579
 GameObject:
   m_ObjectHideFlags: 0
@@ -9030,6 +9057,7 @@ GameObject:
   - component: {fileID: 1898323665}
   - component: {fileID: 1898323664}
   - component: {fileID: 1898323663}
+  - component: {fileID: 1898323666}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
@@ -9125,6 +9153,19 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1898323666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898323661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 198d7bbc34fad3b49841bb5e96557e91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FlashLight: com.osRenegados.VRTest.FlashLight
 --- !u!1001 &1922797885
 PrefabInstance:
   m_ObjectHideFlags: 0
